@@ -10,7 +10,10 @@ def index(request):
     })
 
 def entryPage(request, title):
-    return HttpResponse(title)
+    templateBodyContent = util.markdownToHtmlConverter(title)
+    context = { 'title': title,
+                'bodyContent': templateBodyContent}
+    return render(request, "encyclopedia/page.html", context)
 
 def createNewPage(request):
     return render(request, "encyclopedia/newpage.html")
@@ -23,3 +26,4 @@ def randomPage(request):
     context = {'title': randomPageTitle}
 
     return render(request, "encyclopedia/randompage.html", context)
+

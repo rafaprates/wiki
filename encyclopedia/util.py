@@ -1,4 +1,4 @@
-import re
+import re, markdown2
 
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -35,3 +35,20 @@ def get_entry(title):
         return f.read().decode("utf-8")
     except FileNotFoundError:
         return None
+
+#def markdownToHtmlConverter(title):
+"""
+Retrivies an entry in markdown format by its title and returns the HTML equivalent.
+"""
+
+#with open(title + '.md') as f:
+#    with open('../templates/' + title + '.html', 'w') as g:
+#        for line in f:
+#            g.write(markdown2.markdown(line))
+        
+def markdownToHtmlConverter(title):
+    html = ''
+    with open('./entries/' + title + '.md') as f:
+        for line in f:
+            html += markdown2.markdown(line)
+    return html
