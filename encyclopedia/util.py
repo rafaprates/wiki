@@ -36,12 +36,10 @@ def get_entry(title):
     except FileNotFoundError:
         return None
 
-#def markdownToHtmlConverter(title):
-"""
-Retrivies an entry in markdown format by its title and returns the HTML equivalent.
-"""
-    
 def markdownToHtmlConverter(title):
+    """
+    Retrivies an entry in markdown format by its title and returns the HTML equivalent.
+    """
     html = ''
     with open('./entries/' + title + '.md') as f:
         for line in f:
