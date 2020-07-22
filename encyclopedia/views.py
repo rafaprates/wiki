@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 from random import randint
 from . import util
-from .forms import CreatePageForm # dont understand why
+from .forms import CreatePageForm, EditPageForm # dont understand why
 
 
 def index(request):
@@ -11,7 +11,8 @@ def index(request):
         "entries": util.list_entries()
     })
 
-def entryPage(request, title):
+
+def entry_page(request, title):
     if title in util.list_entries():    
         templateBodyContent = util.markdownToHtmlConverter(title)
         context = { 'title': title,
@@ -20,7 +21,8 @@ def entryPage(request, title):
     else:
         return HttpResponse('<h1>404. Page not found.<h1>')
 
-def createNewPage(request):
+
+def create_new_page(request):
     if request.method == 'POST':
         form = CreatePageForm(request.POST)
         if form.is_valid():
@@ -31,9 +33,14 @@ def createNewPage(request):
             return redirect('encyclopedia:entryPage', title=title)
     else:
         form = CreatePageForm()
-    return render(request, "encyclopedia/createpage.html", {'form': form})
+    return render(request, "encyclopedia/createpage.html", {"form": form})
 
-def randomPage(request):
+
+def edit_existing_page(request):
+    form = EditPageForm()
+    return render(request, "encyclopedia/editpage.html", {"form": form})
+
+def select_random_page(request):
     pageTitleList = util.list_entries()
     randomIndex = randint(0, len(pageTitleList) - 1)
     randomPageTitle = pageTitleList[randomIndex]

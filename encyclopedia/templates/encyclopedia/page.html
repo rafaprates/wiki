@@ -7,8 +7,8 @@
 {% block body %}
     {{ bodyContent|safe }}
 
-    <form action="">
-        <input type="button" value="Edit Page">
+    <form action="{% url 'encyclopedia:editPage' %}">
+        <input type="submit" value="Edit Page">
     </form>
 {% endblock body%}
 
