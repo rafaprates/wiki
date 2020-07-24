@@ -7,7 +7,8 @@
 {% block body %}
     {{ bodyContent|safe }}
 
-    <form action="{% url 'encyclopedia:editPage' %}">
+    <form action="{% url 'encyclopedia:editPage' %}" method="post">
+        {% csrf_token %}
         <input type="submit" value="Edit Page">
     </form>
 {% endblock body%}

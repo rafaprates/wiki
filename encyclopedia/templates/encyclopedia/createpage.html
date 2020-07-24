@@ -8,8 +8,14 @@
 
     <form action="{% url 'encyclopedia:createNewPage' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        
+        <p>{{ form.title.label }}</p>
+        <p>{{ form.title }}</p>
+        <p>{{ form.content }}</p>
         <input type="submit" value="Create Page">
     </form>
 
 {% endblock %}
+
+<!--        {{ form.as_p }}
+-->        

@@ -37,7 +37,7 @@ def get_entry(title):
         return None
         
 
-def markdownToHtmlConverter(title):
+def markdown_to_html_coverter(title):
     """
     Retrivies an entry in markdown format by its title and returns the HTML equivalent.
     """
