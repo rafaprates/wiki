@@ -1,15 +1,17 @@
 {% extends "encyclopedia/layout.html" %}
 
-{% block title%}
+{% block title %}
     {{ title }}
 {% endblock title %}
 
 {% block body %}
     {{ bodyContent|safe }}
 
-    <form action="{% url 'encyclopedia:editPage' %}" method="post">
-        {% csrf_token %}
+    <a href="{% url "encyclopedia:editPage" title %}">AAA</a>
+
+    <!-- <form action="{% url 'encyclopedia:editPage' title %}">
         <input type="submit" value="Edit Page">
-    </form>
+    </form> -->
+
 {% endblock body%}
 

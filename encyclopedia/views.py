@@ -13,22 +13,14 @@ def index(request):
 
 
 def entry_page(request, title):
-    print(title)
-    if request.method == "GET":
-        if title in util.list_entries():    
-            templateBodyContent = util.markdown_to_html_coverter(title)
-            context = { 'title': title,
-                        'bodyContent': templateBodyContent}
-            return render(request, "encyclopedia/page.html", context)
-        else:
-            return HttpResponse('<h1>404. Page not found.<h1>')
-    elif request.method == "POST":
-        print("@@@@@@@@@@@@@@@@@@@@@@@")
-        #content = util.get_entry(title)
-        #data = {"content": content}
-        #form = EditPageForm(initial=data)
-        print(title)
-        return redirect("encyclopedia:editPage", title)
+    if title in util.list_entries():    
+        templateBodyContent = util.markdown_to_html_coverter(title)
+        context = { 'title': title,
+                    'bodyContent': templateBodyContent}
+        return render(request, "encyclopedia/page.html", context)
+    else:
+        return HttpResponse('<h1>404. Page not found.<h1>')
+
 
 def create_new_page(request):
     if request.method == 'POST':
@@ -45,14 +37,10 @@ def create_new_page(request):
 
 
 def edit_existing_page(request, title):
-#    title = request.path
-    print(title)
-#    title = title.replace("wiki/", '')
-#    content = util.get_entry(title)
+    content = util.get_entry(title)
     data = {"content": content}
     form = EditPageForm(initial=data)
-    #page = util.get_entry('CSS')
-    return render(request, "encyclopedia/editpage.html", {"form": form})
+    return render(request, "encyclopedia/editpage.html", {"form": form, "title": title})
 
 
 def select_random_page(request):
