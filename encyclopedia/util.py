@@ -42,7 +42,7 @@ def markdown_to_html_coverter(title):
     Retrivies an entry in markdown format by its title and returns the HTML equivalent.
     """
     html = ''
-    with open('./entries/' + title + '.md') as f:
+    with open(f"./entries/{title}.md") as f:
         for line in f:
-            html += markdown2.markdown(line)
+            html += markdown2.markdown(line) # converts each line to html.
     return html

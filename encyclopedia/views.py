@@ -40,7 +40,14 @@ def edit_existing_page(request, title):
     content = util.get_entry(title)
     data = {"content": content}
     form = EditPageForm(initial=data)
-    return render(request, "encyclopedia/editpage.html", {"form": form, "title": title})
+    if request.method == 'GET':
+        return render(request, "encyclopedia/editpage.html", {"form": form, "title": title})
+    else:
+        content = request.POST['content']
+        with open(f"./entries/{title}.md", "w") as f:
+            f.write(content)
+        html = util.markdown_to_html_coverter(title)
+        return redirect('encyclopedia:entryPage', title)
 
 
 def select_random_page(request):

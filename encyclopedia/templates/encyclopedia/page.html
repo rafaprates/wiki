@@ -7,11 +7,7 @@
 {% block body %}
     {{ bodyContent|safe }}
 
-    <a href="{% url "encyclopedia:editPage" title %}">AAA</a>
-
-    <!-- <form action="{% url 'encyclopedia:editPage' title %}">
-        <input type="submit" value="Edit Page">
-    </form> -->
+    <button><a href="{% url "encyclopedia:editPage" title %}">Edit this page</a></button>
 
 {% endblock body%}
 
