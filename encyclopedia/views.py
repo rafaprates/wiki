@@ -7,9 +7,16 @@ from .forms import CreatePageForm, EditPageForm # dont understand why
 
 
 def index(request):
-    return render(request, "encyclopedia/index.html", {
+    query = request.GET # retrieves the GET parameter.
+
+    if (not bool(query)): # if the dictionary is empty, returns True.
+        return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
+    else:
+        searchString = query['q'] # retrieves the value of the q query string
+        return redirect(f"wiki/{searchString}")
+        #return render(request, "encyclopedia/index.html", {"entries": [searchString]})
 
 
 def entry_page(request, title):
@@ -30,7 +37,7 @@ def create_new_page(request):
             content = form.cleaned_data["content"]
             markdownPage = util.save_entry(title, content)
             htmlPage = util.markdown_to_html_coverter(title)
-            return redirect('encyclopedia:entryPage')
+            return redirect('encyclopedia:entryPage', title)
     else:
         form = CreatePageForm()
     return render(request, "encyclopedia/createpage.html", {"form": form})

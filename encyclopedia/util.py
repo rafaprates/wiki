@@ -46,3 +46,12 @@ def markdown_to_html_coverter(title):
         for line in f:
             html += markdown2.markdown(line) # converts each line to html.
     return html
+
+
+def matches(queryString):
+    pass
+    string = re.compile(r'queryString')
+    listEntries = list_entries()
+    for entry in listEntries:
+        search = string.search(entry)
+
