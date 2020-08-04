@@ -7,19 +7,22 @@ from .forms import CreatePageForm, EditPageForm # dont understand why
 
 
 def index(request):
-    query = request.GET # retrieves the GET parameter.
+    getParameter = request.GET # retrieves the GET parameter.
 
-    if (not bool(query)): # if the dictionary is empty, returns True.
+    if util.listen_for_search(getParameter): # listens for user searching for a page.
+        return util.search_for_page(getParameter)
+    else:
         return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
-    else:
-        searchString = query['q'] # retrieves the value of the q query string
-        return redirect(f"wiki/{searchString}")
-        #return render(request, "encyclopedia/index.html", {"entries": [searchString]})
 
 
 def entry_page(request, title):
+    getParameter = request.GET
+
+    if util.listen_for_search(getParameter): # listens for user searching for a page.
+        return util.search_for_page(getParameter)
+
     if title in util.list_entries():    
         templateBodyContent = util.markdown_to_html_coverter(title)
         context = { 'title': title,
@@ -27,7 +30,7 @@ def entry_page(request, title):
         return render(request, "encyclopedia/page.html", context)
     else:
         return HttpResponse('<h1>404. Page not found.<h1>')
-
+    
 
 def create_new_page(request):
     if request.method == 'POST':

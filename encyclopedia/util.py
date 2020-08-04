@@ -1,5 +1,6 @@
 import re, markdown2
 
+from django.shortcuts import redirect
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
@@ -48,10 +49,20 @@ def markdown_to_html_coverter(title):
     return html
 
 
-def matches(queryString):
-    pass
-    string = re.compile(r'queryString')
-    listEntries = list_entries()
-    for entry in listEntries:
-        search = string.search(entry)
+def listen_for_search(getParameter):
+    """
+    Returns True if the user is trying to search for a page.
+    """
+    if bool(getParameter): # if the dictionary is empty, the user is not searching for anything.
+        return True
+    else:
+        return False
 
+
+def search_for_page(getParameter):
+    """
+    Searches for a page based on the value of the GET Parameter. 
+    """
+    value = getParameter['q'] # retrieves the value of the q GET parameter.
+    return redirect("encyclopedia:entryPage", title=value)
+    
