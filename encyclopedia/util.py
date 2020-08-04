@@ -49,6 +49,18 @@ def markdown_to_html_coverter(title):
     return html
 
 
+def match_for_entries(getParameter):
+
+    title = re.compile(getParameter, re.IGNORECASE)
+    matches = []
+    
+    for entry in list_entries():
+        match = title.search(entry)
+        if match:
+            matches.append(entry)
+    return matches
+
+
 def listen_for_search(getParameter):
     """
     Returns True if the user is trying to search for a page.
@@ -64,5 +76,7 @@ def search_for_page(getParameter):
     Searches for a page based on the value of the GET Parameter. 
     """
     value = getParameter['q'] # retrieves the value of the q GET parameter.
-    return redirect("encyclopedia:entryPage", title=value)
-    
+    if value in list_entries():
+        return redirect("encyclopedia:entryPage", title=value)
+    else:
+        return redirect("encyclopedia:searchResults", searchTerm=value)

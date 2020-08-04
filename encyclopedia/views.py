@@ -66,3 +66,14 @@ def select_random_page(request):
     randomPageTitle = pageTitleList[randomIndex]
     return redirect('wiki/' + randomPageTitle)
 
+
+def search_results(request, searchTerm):
+    getParameter = request.GET
+    #print(getParameter)
+    #value = getParameter['q'] 
+
+    if util.listen_for_search(getParameter): # listens for user searching for a page.
+        return util.search_for_page(getParameter)
+
+    matchesList = util.match_for_entries(searchTerm)
+    return render(request, "encyclopedia/search_results.html", {"entries": matchesList})
